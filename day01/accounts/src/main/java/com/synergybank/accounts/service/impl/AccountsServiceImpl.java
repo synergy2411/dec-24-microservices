@@ -5,6 +5,8 @@ import com.synergybank.accounts.dto.CustomerDto;
 import com.synergybank.accounts.entity.Accounts;
 import com.synergybank.accounts.entity.Customer;
 import com.synergybank.accounts.exceptions.CustomerAlreadyExistsException;
+import com.synergybank.accounts.exceptions.ResourseNotFoundException;
+import com.synergybank.accounts.mapper.AccountsMapper;
 import com.synergybank.accounts.mapper.CustomerMapper;
 import com.synergybank.accounts.repository.AccountsRepository;
 import com.synergybank.accounts.repository.CustomerRepository;
@@ -35,6 +37,7 @@ public class AccountsServiceImpl implements IAccountsService {
         accountsRepository.save(accounts);
     }
 
+
     private Accounts createNewAccount(Long customerId) {
         Accounts accounts = new Accounts();
         Long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
@@ -44,4 +47,22 @@ public class AccountsServiceImpl implements IAccountsService {
         accounts.setBranchAddress("201 Main Road, Wakad, Pune");
         return accounts;
     }
+
+
+    @Override
+    public CustomerDto fetchCustomer(String mobileNumber) {
+        Customer foundCustomer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourseNotFoundException("Customer", "mobileNumber", mobileNumber)
+        );
+        CustomerDto customerDto = CustomerMapper
+                .mapToCustomerDto(foundCustomer, new CustomerDto());
+
+        Accounts accounts = accountsRepository.findByCustomerId(foundCustomer.getCustomerId()).orElseThrow(
+                () -> new ResourseNotFoundException("Accounts", "customer id", foundCustomer.getCustomerId().toString())
+        );
+        AccountsDto accountsDto = AccountsMapper.mapToAccountsDto(accounts, new AccountsDto());
+        customerDto.setAccountsDto(accountsDto);
+        return customerDto;
+    }
+
 }
