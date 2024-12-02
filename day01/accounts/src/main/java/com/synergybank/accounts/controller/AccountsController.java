@@ -27,4 +27,20 @@ public class AccountsController {
         CustomerDto customerDto = iAccountsService.fetchCustomer(mobileNumber);
         return ResponseEntity.status(200).body(customerDto);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> delete(@RequestParam String mobileNumber){
+        iAccountsService.deleteAccount(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDto());
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<ResponseDto> update(@RequestBody CustomerDto customerDto,
+                                              @RequestParam String mobileNumber){
+        iAccountsService.updateAccount(mobileNumber, customerDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                new ResponseDto("Updated", HttpStatus.ACCEPTED)
+        );
+    }
 }

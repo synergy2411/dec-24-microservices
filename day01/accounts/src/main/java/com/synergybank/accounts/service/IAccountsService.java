@@ -8,4 +8,8 @@ public interface IAccountsService {
     void createAccount(CustomerDto customerDto);
 
     CustomerDto fetchCustomer(String mobileNumber);
+
+    void deleteAccount(String mobileNumber);
+
+    void updateAccount(String mobileNumber, CustomerDto customerDto);
 }
