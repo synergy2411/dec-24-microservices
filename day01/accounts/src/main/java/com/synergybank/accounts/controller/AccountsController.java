@@ -3,6 +3,9 @@ package com.synergybank.accounts.controller;
 import com.synergybank.accounts.dto.CustomerDto;
 import com.synergybank.accounts.dto.ResponseDto;
 import com.synergybank.accounts.service.IAccountsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -15,10 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @AllArgsConstructor
 @Validated
+@Tag(name = "Accounts Controller for CRUD Operation")
 public class AccountsController {
 
     private IAccountsService iAccountsService;
 
+    @Operation(description = "Create Method for opening new account")
+    @ApiResponse(responseCode = "201", description = "Creating new account")
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> create(@Valid @RequestBody CustomerDto customerDto) {
         iAccountsService.createAccount(customerDto);
