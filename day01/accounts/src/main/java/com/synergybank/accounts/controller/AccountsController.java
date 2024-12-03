@@ -32,7 +32,7 @@ public class AccountsController {
     public ResponseEntity<ResponseDto> delete(@RequestParam String mobileNumber){
         iAccountsService.deleteAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ResponseDto());
+                .body(new ResponseDto("Deleted", HttpStatus.OK));
     }
 
     @PatchMapping("/update")
