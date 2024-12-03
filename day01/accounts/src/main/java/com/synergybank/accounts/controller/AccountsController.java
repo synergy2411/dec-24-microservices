@@ -20,7 +20,7 @@ public class AccountsController {
     private IAccountsService iAccountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> create(@RequestBody @Valid CustomerDto customerDto){
+    public ResponseEntity<ResponseDto> create(@Valid @RequestBody CustomerDto customerDto) {
         iAccountsService.createAccount(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDto("Success", HttpStatus.CREATED));
@@ -28,26 +28,26 @@ public class AccountsController {
 
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto> fetch(@RequestParam
-                                                 @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have 10 digits")
-                                                 String mobileNumber){
+                                             @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have 10 digits")
+                                             String mobileNumber) {
         CustomerDto customerDto = iAccountsService.fetchCustomer(mobileNumber);
         return ResponseEntity.status(200).body(customerDto);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> delete(@RequestParam
-                                                  @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have 10 digits")
-                                                  String mobileNumber){
+                                              @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have 10 digits")
+                                              String mobileNumber) {
         iAccountsService.deleteAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDto("Deleted", HttpStatus.OK));
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<ResponseDto> update(@RequestBody @Valid CustomerDto customerDto,
+    public ResponseEntity<ResponseDto> update(@Valid @RequestBody CustomerDto customerDto,
                                               @RequestParam
                                               @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have 10 digits")
-                                              String mobileNumber){
+                                              String mobileNumber) {
         iAccountsService.updateAccount(mobileNumber, customerDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                 new ResponseDto("Updated", HttpStatus.ACCEPTED)
