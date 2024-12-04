@@ -1,0 +1,39 @@
+server:
+  port: 8072
+spring:
+  application:
+    name: "gatewayserver"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+eureka:
+  instance:
+    prefreIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEurka: true
+    serviceUrl:
+        defaultZone: "http://localhost:8070/eureka/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: "Gateway Server"
+    description: "Edge Server for Synergy Bank"
+    version: "1.0.0"
