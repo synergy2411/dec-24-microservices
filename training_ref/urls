@@ -1,0 +1,54 @@
+Spring security
+Spring cloud
+Centralized Configuration
+Service discovery / Service Registration
+API Gateway - Routing
+Cloud Function
+Docker K8s
+——————
+
+Config Server - 8071
+Eureka Server - 8070
+Accounts - 8080
+Loans - 8090
+Cards - 9000
+Gateway Server - 8072
+
+
+http://localhost:8072/LOANS/api/create?mobileNumber=9876543211
+
+http://localhost:8072/loans/api/create?mobileNumber=9876543211
+
+
+http://localhost:8072/loans/api/create?mobileNumber=9876543212
+
+http://localhost:8072/synergybankl/loans/api/create?mobileNumber=9876543212
+
+RouteLocator/ RouteLocatorBuilder
+
+http://localhost:8072/synergybank/accounts/api/fetchCustomerDetails?mobileNumber=9876543212
+
+http://localhost:8072/actuator/circuitbreakers
+
+
+
+http;//localhost:8071/accounts/default
+http;//localhost:8071/accounts/qa
+http;//localhost:8071/accounts/prod
+
+https://github.com/synergy2411/synergybank-configs
+
+
+
+
+
+
+http://springdoc.org
+
+http://localhost:8081/swagger-ui/index.html
+
+http://localhost:8880/h2-console
+
+https://github.com/synergy2411/dec-24-microservices
+
+https://github.com/synergy2411/synergybank-config
