@@ -1,0 +1,34 @@
+services:
+  configserver:
+    image: synergyhub/configserver:1.0.1
+    container_name: "configserver"
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit"
+    ports:
+      - 8071:8071
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - synergybank
+  eurekaserver:
+    image: synergyhub/eurekaserver:1.0.1
+    container_name: "eurekaserver"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    ports:
+      - 8070:8070
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+    networks:
+      - synergybank
+networks:
+  synergybank:
+    driver: "bridge"
+
